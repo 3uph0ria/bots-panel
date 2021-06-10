@@ -498,6 +498,16 @@ class Database
 
     //========================================================================//
 
+    public function SelectUserMenuCommends($userId)
+    {
+        $botUserAll =  $this->link->query("SELECT * FROM `menu_commends` WHERE `id_user` = $userId");
+        while ($botUser = $botUserAll->fetch(PDO::FETCH_ASSOC))
+        {
+            $botUserReturn[] = $botUser;
+        }
+        return $botUserReturn;
+    }
+
 
     public function SelectBotUser($login)
     {

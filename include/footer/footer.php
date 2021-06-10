@@ -1,9 +1,3 @@
-
-</div>
-<!-- ./wrapper -->
-
-<!-- REQUIRED SCRIPTS -->
-
 <!-- jQuery -->
 <script src="/bots-panel/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap -->

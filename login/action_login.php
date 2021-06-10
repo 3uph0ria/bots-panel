@@ -23,6 +23,7 @@ if (password_verify($password, $user['password'])) {
     $_SESSION['userVkId'] = $user['vk_id'];
     $_SESSION['firstName'] = $user['first_name'];
     $_SESSION['lastName'] = $user['last_name'];
+    $_SESSION['photo50'] = $user['photo50'];
     $_SESSION['namePermissions'] = $userPermissions['name_permissions'];
     $_SESSION['addNews'] = $userPermissions['add_news'];
     $_SESSION['addServer'] = $userPermissions['add_server'];

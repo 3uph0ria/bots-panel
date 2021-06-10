@@ -1,5 +1,12 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'] . '/bots-panel/configs/project-config.php'
+session_start();
+if(isset($_SESSION['userId']) == false)
+{
+    header('Location: /bots-panel/login/');
+}
+include_once $_SERVER['DOCUMENT_ROOT'] . '/bots-panel/configs/project-config.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/bots-panel/include/classes/Database.php';
+$Database = new Database();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,3 +24,4 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/bots-panel/configs/project-config.php
   <!-- Theme style -->
   <link rel="stylesheet" href="/bots-panel/dist/css/adminlte.min.css">
 </head>
+
