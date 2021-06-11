@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['userId']) == false)
+if(!$_SESSION['userId'])
 {
     header('Location: /bots-panel/login/');
 }

@@ -14,7 +14,7 @@ include_once '../include/header/header.php';
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Команды бота</h1>
+            <h1 class="m-0">Товары</h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -39,16 +39,15 @@ include_once '../include/header/header.php';
 										<thead>
 												<tr>
 														<th scope="col">#</th>
-														<th scope="col">Цвет</th>
-														<th scope="col">Текст кнопки</th>
-														<th scope="col">Ответ на команду</th>
+														<th scope="col">Наименование</th>
+														<th scope="col">Стоимость</th>
 														<th scope="col">Изменить</th>
 														<th scope="col">Удалить</th>
 												</tr>
 										</thead>
 										<tbody>
 												<?
-                        $games = $Database->SelectUserMenuCommends(1);
+                        $games = $Database->GetProducts($_SESSION['userId']);
                         for($i = 0; $i < count($games); $i++):
                             ?>
 													<tr>
@@ -56,12 +55,10 @@ include_once '../include/header/header.php';
 																		<?=$i + 1?>
 																</th>
 																<td class="d-flex">
-																		<?=htmlspecialchars($games[$i]['color'])?>
+																		<?=htmlspecialchars($games[$i]['name'])?>
 																</td>
 																<td>
-																		<?=htmlspecialchars($games[$i]['button_text'])?></td>
-																<td>
-																		<?=htmlspecialchars($games[$i]['value'])?></td>
+																		<?=htmlspecialchars($games[$i]['cost'])?></td>
 																<td><a href="#gameUpdate<?=$i?>" class="btn btn-primary" data-toggle="modal">Изменить</a></td>
 																<td><a href="#gameDelete<?=$i?>" class="btn btn-danger" data-toggle="modal">Удлаить</a></td>
 														</tr>
@@ -72,22 +69,22 @@ include_once '../include/header/header.php';
 										<div class="modal-dialog modal-lg" role="document">
 												<div class="modal-content">
 														<div class="modal-header">
-																<h5 class="modal-title" id="exampleModalLabel<?=$i?>">Добавить команду</h5>
+																<h5 class="modal-title" id="exampleModalLabel<?=$i?>">Добавить товар</h5>
 																<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
 														</div>
 														<div class="modal-body">
-																<form action="actions/action_add_commend.php" method="post">
+																<form action="actions/action_add_product.php" method="post">
 																		<div class="md-form mt-4">
-																				<label for="color">Цвет</label>
-																				<input type="text" id="color" class="form-control" name="color" maxlength="500">
+																				<label for="name">Наименование</label>
+																				<input type="text" id="name" class="form-control" name="name" maxlength="500">
 																		</div>
 																		<div class="md-form mt-4">
-																				<label for="button_text">Текст кнопки</label>
-																				<input type="text" id="button_text" class="form-control" name="button_text" maxlength="20">
+																				<label for="cost">Стоимость</label>
+																				<input type="text" id="cost" class="form-control" name="cost" maxlength="20">
 																		</div>
 																		<div class="md-form mt-4">
-																				<label for="value">Ответ на команду</label>
-																				<textarea name="value" id="value" cols="30" rows="10" class="form-control w-100" maxlength="5000"></textarea>
+																				<label for="value">Описание</label>
+																				<textarea name="description" id="description" cols="30" rows="10" class="form-control w-100" maxlength="5000"></textarea>
 																		</div>
 																		<div class="text-center mt-4 d-flex justify-content-center">
 																					<button type="submit" class="btn btn-primary btn-block btn-rounded z-depth-1a" style="width: 40%;height: 50px;border-radius: 34px">Добавить</button>
@@ -105,26 +102,26 @@ include_once '../include/header/header.php';
 										<div class="modal-dialog modal-lg" role="document">
 												<div class="modal-content">
 														<div class="modal-header">
-																<h5 class="modal-title" id="exampleModalLabel<?=$i?>"><?echo 'Редактирование кнопки'. htmlspecialchars($games[$i]['button_text'])?></h5>
+																<h5 class="modal-title" id="exampleModalLabel<?=$i?>"><?echo 'Редактирование товара'. htmlspecialchars($games[$i]['name'])?></h5>
 																<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
 														</div>
 														<div class="modal-body">
-																<form action="actions/action_upd_commend.php" method="post">
+																<form action="actions/action_upd_product.php" method="post">
 																		<div class="md-form mt-4" style="display: none">
 																				<label for="id">id</label>
 																				<input type="text" id="id" class="form-control" name="id" maxlength="500" value="<?=htmlspecialchars($games[$i]['id'])?>">
 																		</div>
 																		<div class="md-form mt-4">
-																				<label for="color">Цвет</label>
-																				<input type="text" id="color" class="form-control" name="color" maxlength="500" value="<?=htmlspecialchars($games[$i]['color'])?>">
+																				<label for="name">Цвет</label>
+																				<input type="text" id="name" class="form-control" name="name" maxlength="500" value="<?=htmlspecialchars($games[$i]['name'])?>">
 																		</div>
 																		<div class="md-form mt-4">
-																				<label for="button_text">Текст кнопки</label>
-																				<input type="text" id="button_text" class="form-control" name="button_text" maxlength="20" value="<?=htmlspecialchars($games[$i]['button_text'])?>">
+																				<label for="cost">Текст кнопки</label>
+																				<input type="text" id="cost" class="form-control" name="cost" maxlength="20" value="<?=htmlspecialchars($games[$i]['cost'])?>">
 																		</div>
 																		<div class="md-form mt-4">
-																				<label for="value">Ответ на команду</label>
-																				<textarea name="value" id="value" cols="30" rows="10" class="form-control w-100" maxlength="5000"><?=htmlspecialchars($games[$i]['value'])?></textarea>
+																				<label for="description">Ответ на команду</label>
+																				<textarea name="description" id="description" cols="30" rows="10" class="form-control w-100" maxlength="5000"><?=htmlspecialchars($games[$i]['description'])?></textarea>
 																		</div>
 																		<div class="text-center mt-4 d-flex justify-content-center">
 																					<button type="submit" class="btn btn-primary btn-block btn-rounded z-depth-1a" style="width: 40%;height: 50px;border-radius: 34px">Сохранить</button>
@@ -143,12 +140,12 @@ include_once '../include/header/header.php';
 										<div class="modal-dialog modal-lg" role="document">
 												<div class="modal-content">
 														<div class="modal-header">
-																<h5 class="modal-title" id="exampleModalLabel<?=$i?>"><?echo 'Удаление кнопки'. htmlspecialchars($games[$i]['button_text'])?></h5>
+																<h5 class="modal-title" id="exampleModalLabel<?=$i?>"><?echo 'Удаление товара'. htmlspecialchars($games[$i]['name'])?></h5>
 																<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
 														</div>
 														<div class="modal-body">
 																<h4 class="text-center ">Вы действительно хотите удалить кнопку <?=htmlspecialchars($games[$i]['button_text'])?>?</h4>
-																<form action="actions/action_del_commend.php" method="post">
+																<form action="actions/action_del_product.php" method="post">
 																		<div class="md-form mt-5" style="display: none">
 																				<label for="Form-id" class="disabled">ID</label>
 																				<input type="text" id="Form-id" class="form-control disabled" name="id" value="<?=htmlspecialchars($games[$i]['id'])?>"> </div>

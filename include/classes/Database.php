@@ -23,11 +23,66 @@ class Database
 
     //============================= Select ================================//
 
-    public function SelectServerName($name)
+    public function SelectUserMenuCommends($userId)
     {
-        $botUser =  $this->link->prepare("SELECT * FROM `seerver_naems` WHERE `name` = ?");
-        $botUser->execute(array($name));
+        $botUserAll =  $this->link->query("SELECT * FROM `menu_commends` WHERE `id_user` = $userId");
+        while ($botUser = $botUserAll->fetch(PDO::FETCH_ASSOC))
+        {
+            $botUserReturn[] = $botUser;
+        }
+        return $botUserReturn;
+    }
+
+    public function AddMenuCommend($idUser, $button_text, $color, $value)
+    {
+        $botUser =  $this->link->prepare("INSERT INTO `menu_commends`(`id_user`, `button_text`, `color`, `value`) VALUES (?, ?, ?, ?)");
+        $botUser->execute(array($idUser, $button_text, $color, $value));
         return $botUser->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function UpdMenuCommend($idUser, $button_text, $color, $value)
+    {
+        $this->link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $botUser =  $this->link->prepare("UPDATE `menu_commends` SET `button_text` = ?, `color` = ?, `value` = ? WHERE `id` = ?");
+        $botUser->execute(array($button_text, $color, $value, $idUser));
+    }
+
+    public function DelMenuCommend($id)
+    {
+        $this->link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $botUser =  $this->link->prepare("DELETE FROM `menu_commends` WHERE `id` = ?");
+        $botUser->execute(array($id));
+    }
+
+    public function GetProducts($userId)
+    {
+        $botUserAll =  $this->link->query("SELECT * FROM `products` WHERE `id_user` = $userId");
+        while ($botUser = $botUserAll->fetch(PDO::FETCH_ASSOC))
+        {
+            $botUserReturn[] = $botUser;
+        }
+        return $botUserReturn;
+    }
+
+    public function AddProduct($idUser, $name, $cost, $description)
+    {
+        $botUser =  $this->link->prepare("INSERT INTO `products`(`id_user`, `name`, `cost`, `description`) VALUES (?, ?, ?, ?)");
+        $botUser->execute(array($idUser, $name, $cost, $description));
+        return $botUser->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function UpdProduct($idUser, $name, $cost, $description)
+    {
+        $this->link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $botUser =  $this->link->prepare("UPDATE `products` SET `name` = ?, `cost` = ?, `description` = ? WHERE `id` = ?");
+        $botUser->execute(array($name, $cost, $description, $idUser));
+    }
+
+    public function DelMProduct($id)
+    {
+        $this->link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $botUser =  $this->link->prepare("DELETE FROM `products` WHERE `id` = ?");
+        $botUser->execute(array($id));
     }
 
     public function SelectUsersGroups($name)
@@ -497,16 +552,6 @@ class Database
     }
 
     //========================================================================//
-
-    public function SelectUserMenuCommends($userId)
-    {
-        $botUserAll =  $this->link->query("SELECT * FROM `menu_commends` WHERE `id_user` = $userId");
-        while ($botUser = $botUserAll->fetch(PDO::FETCH_ASSOC))
-        {
-            $botUserReturn[] = $botUser;
-        }
-        return $botUserReturn;
-    }
 
 
     public function SelectBotUser($login)

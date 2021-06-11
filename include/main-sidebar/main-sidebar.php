@@ -60,6 +60,12 @@
               <p>Настройки команд</p>
             </a>
           </li>
+					<li class="nav-item">
+            <a href="/bots-panel/pages/products.php" class="nav-link">
+              <i class="nav-icon fas fa-ellipsis-h"></i>
+              <p>Настройки товаров</p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
